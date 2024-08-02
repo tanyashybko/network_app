@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_app/networking/feature/posts/domain/usecases/get_posts_usecase.dart';
 import 'package:network_app/networking/feature/posts/presentation/cubit/post_cubit.dart';
-import 'package:network_app/networking/feature/posts/data/repository/post_repository.dart';
 
 class PostListWidget extends StatelessWidget {
   const PostListWidget({super.key});
@@ -11,9 +10,7 @@ class PostListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PostCubit(
-        GetPostsUseCase(
-          RepositoryProvider.of<PostRepository>(context),
-        ),
+        RepositoryProvider.of<GetPostsUseCase>(context),
       )..fetchPosts(),
       child: Scaffold(
         appBar: AppBar(

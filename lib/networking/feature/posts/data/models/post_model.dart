@@ -1,5 +1,10 @@
 // ignore_for_file: sort_constructors_first
 
+import 'package:json_annotation/json_annotation.dart';
+
+part 'post_model.g.dart';
+
+@JsonSerializable()
 class PostModel {
   final int id;
   final String title;
@@ -11,19 +16,8 @@ class PostModel {
     required this.body,
   });
 
-  factory PostModel.fromJson(Map<String, dynamic> json) {
-    return PostModel(
-      id: json['id'] as int,
-      title: json['title'] as String,
-      body: json['body'] as String,
-    );
-  }
+  factory PostModel.fromJson(Map<String, dynamic> json) =>
+      _$PostModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'body': body,
-    };
-  }
+  Map<String, dynamic> toJson() => _$PostModelToJson(this);
 }

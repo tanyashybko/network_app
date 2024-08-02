@@ -1,6 +1,5 @@
-// ignore_for_file: comment_references
-
 import 'package:dio/dio.dart';
+import 'package:network_app/networking/const.dart';
 
 /// A service class that wraps the [Dio] instance and provides methods for
 /// basic network requests.
@@ -18,6 +17,8 @@ class DioService {
     HttpClientAdapter? httpClientAdapter,
   })  : _dio = dioClient,
         _cancelToken = CancelToken() {
+    _dio.options = BaseOptions(baseUrl: baseURL);
+
     if (interceptors != null) {
       _dio.interceptors.addAll(interceptors);
     }
@@ -74,7 +75,7 @@ class DioService {
         cancelToken: cancelToken ?? _cancelToken,
       );
       return response.data as R;
-    // ignore: deprecated_member_use
+      // ignore: deprecated_member_use
     } on DioError catch (e) {
       // Handle DioError or rethrow if necessary
       throw Exception('Network request failed: ${e.message}');
