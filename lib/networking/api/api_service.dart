@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:network_app/networking/dio_service.dart';
@@ -68,7 +66,9 @@ class ApiServiceImpl implements ApiService {
         return [];
       } else {
         return data
-            .map((dynamic dataMap) => converter(dataMap as Map<String, dynamic>))
+            .map(
+              (dynamic dataMap) => converter(dataMap as Map<String, dynamic>),
+            )
             .toList();
       }
     } on Exception catch (ex) {

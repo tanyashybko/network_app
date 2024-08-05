@@ -7,7 +7,8 @@ import 'package:network_app/networking/const.dart';
 import 'package:network_app/networking/dio_service.dart';
 import 'package:network_app/networking/feature/posts/data/repository/post_repository.dart';
 import 'package:network_app/networking/feature/posts/domain/usecases/get_posts_usecase.dart';
-import 'package:network_app/networking/feature/posts/presentation/widgets/post_list_widget.dart';
+import 'package:network_app/networking/feature/posts/presentation/screens/post_detail_screen.dart';
+import 'package:network_app/networking/feature/posts/presentation/screens/post_list_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -48,7 +49,13 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const PostListWidget(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const PostListScreen(),
+          '/postDetail': (context) => PostDetailScreen(
+            postId: ModalRoute.of(context)!.settings.arguments! as int,
+          ),
+        },
       ),
     );
   }

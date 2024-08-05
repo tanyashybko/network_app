@@ -1,5 +1,6 @@
 enum PostsEndpoint {
-  allPosts('posts');
+  allPosts('posts'),
+  comments('comments');
 
   const PostsEndpoint(this.path);
 
