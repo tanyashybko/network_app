@@ -1,3 +1,4 @@
 const baseURL = 'https://jsonplaceholder.typicode.com/';
-const endpointPost = 'posts';
+const endpointPosts = 'posts';
 const endpointComments = 'comments';
+const routePostDetail = '/postDetail';

@@ -16,6 +16,8 @@ abstract class ApiService {
     Map<String, dynamic>? queryParams,
     CancelToken? cancelToken,
   });
+
+  Future<void> delete({required String endpoint});
 }
 
 class ApiServiceImpl implements ApiService {
@@ -31,17 +33,13 @@ class ApiServiceImpl implements ApiService {
     CancelToken? cancelToken,
   }) async {
     try {
-      final data = await _dioService.get<Map<String, dynamic>>(
+      final data = await _dioService.get<T>(
         endpoint: endpoint,
+        converter: converter,
         queryParams: queryParams,
         cancelToken: cancelToken,
       );
-
-      if (data == null) {
-        return null;
-      } else {
-        return converter(data);
-      }
+      return data;
     } on Exception catch (ex) {
       debugPrint(ex.toString());
       rethrow;
@@ -56,21 +54,24 @@ class ApiServiceImpl implements ApiService {
     CancelToken? cancelToken,
   }) async {
     try {
-      final data = await _dioService.get<List<dynamic>>(
+      final data = await _dioService.getCollectionData<T>(
         endpoint: endpoint,
+        converter: converter,
         queryParams: queryParams,
         cancelToken: cancelToken,
       );
 
-      if (data == null) {
-        return [];
-      } else {
-        return data
-            .map(
-              (dynamic dataMap) => converter(dataMap as Map<String, dynamic>),
-            )
-            .toList();
-      }
+      return data;
+    } on Exception catch (ex) {
+      debugPrint(ex.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> delete({required String endpoint}) async {
+    try {
+      await _dioService.delete(endpoint: endpoint);
     } on Exception catch (ex) {
       debugPrint(ex.toString());
       rethrow;

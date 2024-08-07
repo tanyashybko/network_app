@@ -5,10 +5,10 @@ import 'package:network_app/networking/feature/posts/data/repository/post_reposi
 
 class GetPostsUseCase {
 
-  GetPostsUseCase(this.repository);
-  final PostRepository repository;
+  GetPostsUseCase(this.postRepository);
+  final PostRepository postRepository;
 
-  Future<List<PostModel>> call() async {
-    return await repository.getPosts();
+  Future<List<PostModel>> execute() async {
+    return await postRepository.getPosts();
   }
 }

@@ -1,6 +1,8 @@
 part of 'post_detail_cubit.dart';
 
 abstract class PostDetailState extends Equatable {
+  const PostDetailState();
+
   @override
   List<Object?> get props => [];
 }
@@ -11,7 +13,7 @@ class PostDetailLoading extends PostDetailState {}
 
 class PostDetailLoaded extends PostDetailState {
 
-  PostDetailLoaded({required this.post, required this.comments});
+  const PostDetailLoaded({required this.post, required this.comments});
   final PostModel post;
   final List<CommentModel> comments;
 
@@ -21,9 +23,11 @@ class PostDetailLoaded extends PostDetailState {
 
 class PostDetailError extends PostDetailState {
 
-  PostDetailError({required this.message});
+  const PostDetailError({required this.message});
   final String message;
 
   @override
   List<Object?> get props => [message];
 }
+
+class PostDeleted extends PostDetailState {}
