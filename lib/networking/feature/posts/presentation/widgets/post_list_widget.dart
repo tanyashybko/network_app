@@ -7,7 +7,7 @@ class PostListWidget extends StatefulWidget {
   const PostListWidget({super.key});
 
   @override
-  _PostListWidgetState createState() => _PostListWidgetState();
+  State<PostListWidget> createState() => _PostListWidgetState();
 }
 
 class _PostListWidgetState extends State<PostListWidget> {

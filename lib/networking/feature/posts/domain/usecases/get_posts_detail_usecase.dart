@@ -7,10 +7,10 @@ class GetPostDetailUseCase {
   final PostRepository repository;
 
   Future<PostModel> call(int postId) async {
-    return await repository.getPost(postId);
+    return repository.getPost(postId);
   }
 
   Future<List<CommentModel>> getComments(int postId) async {
-    return await repository.getComments(postId);
+    return repository.getComments(postId);
   }
 }
