@@ -26,7 +26,10 @@ class PostCubit extends Cubit<PostState> {
     try {
       emit(PostLoading());
       final posts = await getPostsUseCase.execute();
-      emit(PostLoaded(posts: posts));
+      emit(PostLoaded(
+        posts: posts,
+        comments: const {}, // Initialize with empty map
+      ),);
     } catch (e) {
       emit(PostError(message: e.toString()));
     }
@@ -34,28 +37,58 @@ class PostCubit extends Cubit<PostState> {
 
   Future<void> removePost(int postId) async {
     try {
-      await deletePostUseCase.execute(postId);
-      await fetchPosts();
+      final currentState = state;
+      if (currentState is PostLoaded) {
+        emit(PostLoading());
+        await deletePostUseCase.execute(postId);
+        final updatedPosts =
+            currentState.posts.where((post) => post.id != postId).toList();
+        emit(PostLoaded(
+          posts: updatedPosts,
+          comments: currentState.comments,
+        ),);
+      }
     } catch (e) {
       emit(PostError(message: e.toString()));
     }
   }
 
-  Future<void> removeComment(int commentId) async {
+  Future<void> removeComment(int postId, int commentId) async {
     try {
-      await deleteCommentUseCase.execute(commentId);
-      await fetchPosts();
+      final currentState = state;
+      if (currentState is PostLoaded) {
+        await deleteCommentUseCase.execute(commentId);
+        final updatedComments =
+            Map<int, List<CommentModel>>.from(currentState.comments);
+        updatedComments[postId] = updatedComments[postId]
+                ?.where((comment) => comment.id != commentId)
+                .toList() ??
+            [];
+        emit(PostLoaded(
+          posts: currentState.posts,
+          comments: updatedComments,
+        ),);
+      }
     } catch (e) {
       emit(PostError(message: e.toString()));
     }
   }
 
-  Future<List<CommentModel>> getComments(int postId) async {
+  Future<void> fetchComments(int postId) async {
     try {
-      final comments = await getCommentsUseCase.execute(postId);
-      return comments;
+      final currentState = state;
+      if (currentState is PostLoaded) {
+        final comments = await getCommentsUseCase.execute(postId);
+        final updatedComments =
+            Map<int, List<CommentModel>>.from(currentState.comments);
+        updatedComments[postId] = comments;
+        emit(PostLoaded(
+          posts: currentState.posts,
+          comments: updatedComments,
+        ),);
+      }
     } catch (e) {
-      throw Exception('Failed to load comments: ${e.toString()}');
+      emit(PostError(message: e.toString()));
     }
   }
 }

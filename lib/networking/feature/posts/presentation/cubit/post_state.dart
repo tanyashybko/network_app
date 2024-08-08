@@ -13,11 +13,15 @@ class PostLoading extends PostState {}
 
 class PostLoaded extends PostState {
 
-  const PostLoaded({required this.posts});
+  const PostLoaded({
+    required this.posts,
+    required this.comments,
+  });
   final List<PostModel> posts;
+  final Map<int, List<CommentModel>> comments;
 
   @override
-  List<Object> get props => [posts];
+  List<Object> get props => [posts, comments];
 }
 
 class PostError extends PostState {
