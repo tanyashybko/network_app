@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_app/networking/feature/posts/presentation/cubit/post_cubit.dart';
 
 class PostDetailScreen extends StatelessWidget {
-
   const PostDetailScreen({required this.postId, super.key});
+
   final int postId;
 
   @override

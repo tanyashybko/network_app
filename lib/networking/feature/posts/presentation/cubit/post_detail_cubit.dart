@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:network_app/networking/feature/posts/data/models/comment_model.dart';
-import 'package:network_app/networking/feature/posts/data/models/post_model.dart';
+import 'package:network_app/networking/feature/posts/data/models/isar/comment_model_isar.dart';
+import 'package:network_app/networking/feature/posts/data/models/isar/post_model_isar.dart';
 import 'package:network_app/networking/feature/posts/data/repository/post_repository.dart';
 
 part 'post_detail_state.dart';
